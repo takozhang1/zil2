@@ -7,12 +7,12 @@
  let start 0 
  let end 10 
  loop 
- add y y x 
- print y 
- add y y one 
- print y 
- add start start one 
- print start 
+   add y y x 
+   print y 
+   add y y one 
+   print y 
+   add start start one 
+   print start 
  while start end 
  assign y zero 
  print y 
@@ -20,16 +20,16 @@
  let h 3 
  let leet 1337
  if g h 
- print one 
- let test 40 
- let z 3 
- if g z 
- print test 
- assign y z 
- if g y 
- print y 
- endif 
- endif 
+   print one 
+   let test 40 
+   let z 3 
+   if g z 
+     print test 
+     assign y z 
+     if g y 
+       print y 
+     endif 
+   endif 
  endif 
  print leet 
  print x 
