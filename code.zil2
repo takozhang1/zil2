@@ -14,13 +14,22 @@
  add start start one 
  print start 
  while start end 
- assign y 0 
+ assign y zero 
  print y 
- let g 1 
+ let g 3 
  let h 3 
  let leet 1337
  if g h 
  print one 
+ let test 40 
+ let z 3 
+ if g z 
+ print test 
+ assign y z 
+ if g y 
+ print y 
+ endif 
+ endif 
  endif 
  print leet 
  print x 

@@ -82,7 +82,21 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
         //if
         else if (commands[i][0] == "if "){
             if (data[commands[i][1]] != data[commands[i][2]]){
-                i = intFromString(commands[i][3]);
+                //if command is if add one to ifCounter
+                //if command is endif subtract on from if
+                int ifCounter = 1;
+                unsigned int ifIter = i + 1;
+                while (ifCounter){
+                    if (commands[ifIter][0] == "if "){
+                        ifCounter++;
+                    }
+                    if (commands[ifIter][0] == "endif "){
+                        ifCounter--;
+                    }
+                    ifIter++;
+                }
+                ifIter--;
+                i = ifIter;
             }
         }
     }
@@ -278,9 +292,9 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
             if (valueString == "if "){
                 cout << "in if \n";
                 command[0] = valueString;
-                ifPosition[ifNumber] = commandCounter;
+                //ifPosition[ifNumber] = commandCounter;
                 bIf = true;
-                ifNumber++;
+                //ifNumber++;
             }
             else if (bIf == true && bValue == false){
                 command[1] = valueString;
@@ -297,7 +311,12 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
             }
             if (valueString == "endif "){
                 cout << "in endif \n";
-                commands[ifPosition[ifNumber -1]][3] = toString(commandCounter - 1);
+                //commands[ifPosition[ifNumber -1]][3] = toString(commandCounter - 1);
+                command[0] = valueString;
+                commands.push_back(command);
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
             }
 
             valueString.clear();
