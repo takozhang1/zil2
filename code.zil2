@@ -16,3 +16,11 @@
  while start end 
  assign y 0 
  print y 
+ let g 1 
+ let h 3 
+ let leet 1337
+ if g h 
+ print one 
+ endif 
+ print leet 
+ print x 

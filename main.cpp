@@ -109,6 +109,10 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
     bool bWhile = false;
     int pc = 0;
 
+    int ifPosition[] {};
+    int ifNumber = 0;
+    bool bIf = false;
+
     vector<string> command {"","","",""};
 
     unsigned int commandCounter = 0;
@@ -269,6 +273,31 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
                 bWhile = false;
                 bValue = false;
                 commandCounter++;
+            }
+            //If
+            if (valueString == "if "){
+                cout << "in if \n";
+                command[0] = valueString;
+                ifPosition[ifNumber] = commandCounter;
+                bIf = true;
+                ifNumber++;
+            }
+            else if (bIf == true && bValue == false){
+                command[1] = valueString;
+                bValue = true;
+            }
+            else if (bIf == true & bValue == true){
+                command[2] = valueString;
+                bIf = false;
+                bValue = false;
+                commands.push_back(command);
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
+            }
+            if (valueString == "endif "){
+                cout << "in endif \n";
+                commands[ifPosition[ifNumber -1]][3] = toString(commandCounter - 1);
             }
 
             valueString.clear();
