@@ -10,4 +10,5 @@ Build in terminal
 `clang++ -m64 -std=c++20 main.cpp -o zil2`
 
 ## Run Interperter
-Place code.zil2 in same folder as compiled executable
+`./zil2 full/path/to/code.zil2`
+defaults to run code.zil2 in the executable folder.
