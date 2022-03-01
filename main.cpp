@@ -345,23 +345,35 @@ void listCommands(vector<vector<string> >& commands){
     }
 }
 
-int main()
-{
-    cout << "zil2" << endl;
-
-    string code{};
-
+void loadCode(string& code,string& filePath){
     code.clear();
-    string filePath = "code.zil2";
     ifstream inf{filePath, ifstream::binary};
     if (!inf){
         cerr << "No File at Path " << filePath << "\n";
-        return 1;
     }
     char ch{};
     while (inf.get(ch)){
         code += ch;
     }
+}
+
+int main(int argc, char *argv[])
+{
+    cout << "zil2\n" << endl;
+
+    string code{};
+    string filePath{};
+    if (argc > 1){
+        filePath = argv[1];
+    }
+
+    if (filePath == ""){
+        cout << "Empty Path\n";
+        cout << "Loading Default Path\n\n";
+        filePath = "code.zil2";
+    }
+
+    loadCode(code,filePath);
     cout << code;
 
     map<string, int> data;
