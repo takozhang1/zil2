@@ -43,3 +43,7 @@
  print x 
  divi x x g 
  print x 
+ let four 4 
+ let three 3 
+ modu x four three 
+ print x 
