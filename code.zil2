@@ -33,3 +33,9 @@
  endif 
  print leet 
  print x 
+ let q -123 
+ print q 
+ add q q one 
+ print q 
+ sub x x one 
+ print x 
