@@ -65,6 +65,18 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
                 cout << data[commands[i][2]] - data[commands[i][3]] << "\n\n";
             }
         }
+        //multiple
+        else if (commands[i][0] == "multi "){
+            data[commands[i][1]] = data[commands[i][2]] * data[commands[i][3]];
+            if (debug){
+                cout << "\nrunCommandCounter is:" << i << "\n" << "in run multi \n";
+                cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n";
+                cout << commands[i][2] << " value is:" << data[commands[i][2]] << "\n";
+                cout << commands[i][3] << " value is:" << data[commands[i][3]] << "\n";
+                cout << "multi return value is :";
+                cout << data[commands[i][2]] * data[commands[i][3]] << "\n\n";
+            }
+        }
         //print
         else if (commands[i][0] == "print "){
             cout << "variable :" << commands[i][1] <<" ";
@@ -129,6 +141,7 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
     bool loop = false;
     bool bAssign = false;
     bool bDebug = false;
+    bool bMulti = false;
 
     // Test Loop Values
     int loopPosition[] {};
@@ -239,6 +252,36 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
                 cout << "value 2 is :" << command[3] << "\n\n";
                 commands.push_back(command);
                 bSub = false;
+                bKey = false;
+                bValue = false;
+                key.clear();
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
+            }
+
+            //Multiple 2 Variables
+            if (valueString == "multi "){
+                bMulti = true;
+                command[0] = valueString;
+                cout << "in multi\n";
+            }
+
+            else if(bMulti == true && bKey == false){
+                command[1] = valueString;
+                cout << "storage name is :" << command[1] << "\n";
+                bKey = true;
+            }
+            else if (bMulti == true && bKey == true && bValue == false){
+                command[2] = valueString;
+                cout << "value 1 is :" << command[2] << "\n";
+                bValue = true;
+            }
+            else if (bMulti == true && bValue == true){
+                command[3] = valueString;
+                cout << "value 2 is :" << command[3] << "\n\n";
+                commands.push_back(command);
+                bMulti = false;
                 bKey = false;
                 bValue = false;
                 key.clear();
