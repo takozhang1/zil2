@@ -41,3 +41,5 @@
  print x 
  multi x x g 
  print x 
+ divi x x g 
+ print x 
