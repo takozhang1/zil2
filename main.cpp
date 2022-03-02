@@ -89,6 +89,18 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
                 cout << data[commands[i][2]] / data[commands[i][3]] << "\n\n";
             }
         }
+        //modulo
+        else if (commands[i][0] == "modu "){
+            data[commands[i][1]] = data[commands[i][2]] % data[commands[i][3]];
+            if (debug){
+                cout << "\nrunCommandCounter is:" << i << "\n" << "in run modu \n";
+                cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n";
+                cout << commands[i][2] << " value is:" << data[commands[i][2]] << "\n";
+                cout << commands[i][3] << " value is:" << data[commands[i][3]] << "\n";
+                cout << "modu return value is :";
+                cout << data[commands[i][2]] % data[commands[i][3]] << "\n\n";
+            }
+        }
         //print
         else if (commands[i][0] == "print "){
             cout << "variable :" << commands[i][1] <<" ";
@@ -155,6 +167,7 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
     bool bDebug = false;
     bool bMulti = false;
     bool bDivi = false;
+    bool bModu = false;
 
     // Test Loop Values
     int loopPosition[] {};
@@ -325,6 +338,36 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
                 cout << "value 2 is :" << command[3] << "\n\n";
                 commands.push_back(command);
                 bDivi = false;
+                bKey = false;
+                bValue = false;
+                key.clear();
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
+            }
+
+            //modulo
+            if (valueString == "modu "){
+                bModu = true;
+                command[0] = valueString;
+                cout << "in modu\n";
+            }
+
+            else if(bModu == true && bKey == false){
+                command[1] = valueString;
+                cout << "storage name is :" << command[1] << "\n";
+                bKey = true;
+            }
+            else if (bModu == true && bKey == true && bValue == false){
+                command[2] = valueString;
+                cout << "value 1 is :" << command[2] << "\n";
+                bValue = true;
+            }
+            else if (bModu == true && bValue == true){
+                command[3] = valueString;
+                cout << "value 2 is :" << command[3] << "\n\n";
+                commands.push_back(command);
+                bModu = false;
                 bKey = false;
                 bValue = false;
                 key.clear();
