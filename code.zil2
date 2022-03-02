@@ -39,3 +39,5 @@
  print q 
  sub x x one 
  print x 
+ multi x x g 
+ print x 
