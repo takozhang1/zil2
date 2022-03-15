@@ -47,3 +47,7 @@
  let three 3 
  modu x four three 
  print x 
+ let tempString "  hello\\ \" " 
+ let tempStrin "   bro \" says" 
+ add tempString tempString tempStrin 
+ print tempString 
