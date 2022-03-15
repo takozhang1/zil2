@@ -8,9 +8,9 @@
 using namespace std;
 
 int intFromString(string& from);
-void run(vector<vector<string> >& commands,map<string, int>& data);
+void run(vector<vector<string> >& commands, map<string, int>& data, map<string, string>& dataString, map<string, char>& dataType);
 void listCommands(vector<vector<string> >& commands);
-void parseCode(string& code, map<string, int>& data, vector<vector<string> >& commands);
+void parseCode(string& code, vector<vector<string> >& commands);
 string toString(int x);
 
 string toString(int x){
@@ -26,7 +26,7 @@ int intFromString(string& from){
     return to;
 }
 
-void run(vector<vector<string> >& commands,map<string, int>& data){
+void run(vector<vector<string> >& commands, map<string, int>& data, map<string, string>& dataString, map<string, char>& dataType){
     bool debug = false;
     for (unsigned int i = 0; i < commands.size(); i++){
         //debug
@@ -35,7 +35,44 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
         }
         //let
         else if (commands[i][0] == "let "){
-            data[commands[i][1]] = intFromString(commands[i][2]);
+            if (commands[i][2][0] == '"'){
+                //cout << "This is a String\n";
+                dataType[commands[i][1]] = 's';
+                //cout << dataType[commands[i][1]] << "\n";
+                for (int j = 1; j < commands[i][2].size(); j++){
+                    if (commands[i][2][j] == '\\'){
+                        switch (commands[i][2][j + 1]){
+                        case '"':
+                            dataString[commands[i][1]] += "\"";
+                            continue;
+                            break;
+                        case '\\':
+                            cout << "in \\\\ Eorrors:\n\n\n";
+                            dataString[commands[i][1]] += "\\";
+                            continue;
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                    if (commands[i][2][j] == '\\'){
+                        continue;
+                    }
+                    if (commands[i][2][j] == '"'){
+                        continue;
+                    }
+                    if (debug) {
+                        cout << "string chars: " << commands[i][2][j] << "\n";
+                    }
+
+                    dataString[commands[i][1]] += commands[i][2][j];
+                }
+            }
+            else{
+                dataType[commands[i][1]] = 'i';
+                data[commands[i][1]] = intFromString(commands[i][2]);
+            }
+
             if (debug){
                 cout << "\nrunCommandCounter is:" << i << "\n" << "in run let \n";
                 cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n\n";
@@ -43,7 +80,17 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
         }
         //add
         else if (commands[i][0] == "add "){
-            data[commands[i][1]] = data[commands[i][2]] + data[commands[i][3]];
+            if (dataType[commands[i][1]] == 's' && dataType[commands[i][2]] == 's' && dataType[commands[i][3]] == 's'){
+                dataString[commands[i][1]] = dataString[commands[i][2]] + dataString[commands[i][3]];
+            }
+            else if (dataType[commands[i][1]] == 'i' && dataType[commands[i][2]] == 'i' && dataType[commands[i][3]] == 'i'){
+                data[commands[i][1]] = data[commands[i][2]] + data[commands[i][3]];
+            }
+            else{
+                cout << "Error type missmatch\n" << dataType[commands[i][1]] << " != " << dataType[commands[i][2]];
+                cout << " != " << dataType[commands[i][3]] << "\n";
+            }
+
             if (debug){
                 cout << "\nrunCommandCounter is:" << i << "\n" << "in run add \n";
                 cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n";
@@ -103,8 +150,16 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
         }
         //print
         else if (commands[i][0] == "print "){
-            cout << "variable :" << commands[i][1] <<" ";
-            cout << data[commands[i][1]] << "\n";
+            //cout << dataString[commands[i][1]] << " ******\n";
+            //cout << dataType[commands[i][1]] << " ******\n";
+            if (dataType[commands[i][1]] == 's'){
+                cout << "variable :" << commands[i][1] <<" ";
+                cout << dataString[commands[i][1]] << "\n";
+            }
+            else{
+                cout << "variable :" << commands[i][1] <<" ";
+                cout << data[commands[i][1]] << "\n";
+            }
         }
         //while
         else if (commands[i][0] == "while "){
@@ -150,7 +205,7 @@ void run(vector<vector<string> >& commands,map<string, int>& data){
     }
 }
 
-void parseCode(string& code, map<string, int>& data, vector<vector<string> >& commands){
+void parseCode(string& code, vector<vector<string> >& commands){
 
     string temp = "";
     string valueString = "";
@@ -216,14 +271,54 @@ void parseCode(string& code, map<string, int>& data, vector<vector<string> >& co
                 bKey = true;
             }
             else if (let == true && bKey == true){
-                command[2] = valueString;
-                cout << "value is :" << command[2] << "\n\n";
-                commands.push_back(command);
-                let = false;
-                bKey = false;
-                command.clear();
-                command = {"","","",""};
-                commandCounter++;
+                if (valueString[0] == '"'){
+                    string stringString = "";
+                    stringString += valueString;
+                    for(int j = i; code[j] != '"'; j++){
+                        //Check Escape Characters
+                        if (code[j] == '\\'){
+                            switch(code[j + 1]) {
+                            case '"':
+                                stringString += '\\';
+                                stringString += '"';
+                                j += 1;
+                                continue;
+                                break;
+                            case '\\':
+                                stringString += "\\\\";
+                                j += 1;
+                                continue;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        else{
+                            stringString += code[j];
+                        }
+                    }
+                    stringString += '"';
+                    cout << "@@@@@ :" << stringString << "\n";
+                    cout << "In let stage 3 <><><><>\n\n";
+                    command[2] = stringString;
+                    cout << "value is :" << command[2] << "\n\n";
+                    commands.push_back(command);
+                    let = false;
+                    bKey = false;
+                    command.clear();
+                    command = {"","","",""};
+                    commandCounter++;
+                }
+                else{
+                    command[2] = valueString;
+                    cout << "value is :" << command[2] << "\n\n";
+                    commands.push_back(command);
+                    let = false;
+                    bKey = false;
+                    command.clear();
+                    command = {"","","",""};
+                    commandCounter++;
+                }
             }
 
             //ADD 2 Variables
@@ -549,13 +644,15 @@ int main(int argc, char *argv[])
     cout << code;
 
     map<string, int> data;
+    map<string, char> dataType;
+    map<string, string> dataString;
     vector<vector<string> > commands;
 
-    parseCode(code, data, commands);
+    parseCode(code, commands);
 
     listCommands(commands);
 
-    run(commands, data);
+    run(commands, data, dataString, dataType);
 
     return 0;
 }
