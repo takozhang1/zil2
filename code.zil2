@@ -47,7 +47,17 @@
  let three 3 
  modu x four three 
  print x 
- let tempString "  hello\\ \" " 
- let tempStrin "   bro \" says" 
+ let tempString "  hello \\ \" " 
+ let tempStrin "   bro \" \n says\n" 
  add tempString tempString tempStrin 
  print tempString 
+ let tempString2 "TEST " 
+ print tempString2 
+ assign tempString tempString2 
+ assign tempString2 four 
+ print tempString 
+ print tempString2 
+ assign x tempString2 
+ print x 
+ let tempSpace "pizza" 
+ 
