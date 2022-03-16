@@ -7,7 +7,7 @@ C++ 17
 
 ## Build Directions
 Build in terminal
-`clang++ -m64 -std=c++20 main.cpp -o zil2`
+`clang++ -m64 -std=c++20 main.cpp run.cpp parseCode.cpp -o zil2`
 
 ## Run Interperter
 `./zil2 full/path/to/code.zil2`
