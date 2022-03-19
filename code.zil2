@@ -60,4 +60,6 @@
  assign x tempString2 
  print x 
  let tempSpace "pizza" 
+ input up 
+ print up 
  
