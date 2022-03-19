@@ -21,6 +21,7 @@ void parseCode(string& code, vector<vector<string> >& commands){
     bool bMulti = false;
     bool bDivi = false;
     bool bModu = false;
+    bool bInput = false;
 
     // Test Loop Values
     int loopPosition[] {};
@@ -378,6 +379,24 @@ void parseCode(string& code, vector<vector<string> >& commands){
                 //commands[ifPosition[ifNumber -1]][3] = toString(commandCounter - 1);
                 command[0] = valueString;
                 commands.push_back(command);
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
+            }
+
+            //input
+            if (valueString == "input "){
+                bInput = true;
+                command[0] = valueString;
+                cout << "in input\n";
+            }
+            else if(bInput == true && bKey == false){
+                command[1] = valueString;
+                cout << "storage name is :" << command[1] << "\n";
+                commands.push_back(command);
+                bInput = false;
+                bKey = false;
+                key.clear();
                 command.clear();
                 command = {"","","",""};
                 commandCounter++;
