@@ -18,11 +18,11 @@ void modu(std::vector<std::vector<std::string> >& commands, std::map<std::string
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
 void print(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
-void runWhile(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
+int runWhile(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
 void runAssign(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
-void runIf(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
+int runIf(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
 void runInput(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);

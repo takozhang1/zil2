@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     if (filePath == ""){
         cout << "Empty Path\n";
         cout << "Loading Default Path\n\n";
-        filePath = "code.zil2";
+        filePath = "tikTakToe.zil2";
     }
 
     loadCode(code,filePath);

@@ -3,6 +3,8 @@
 
 using namespace std;
 
+
+
 void let(vector<vector<string> >& commands, map<string, int>& data,
     map<string, string>& dataString, map<string, char>& dataType, int i, bool debug){
     if (commands[i][2][0] == '"'){
@@ -158,16 +160,77 @@ void print(vector<vector<string> >& commands, map<string, int>& data,
     }
 }
 
-void runWhile(vector<vector<string> >& commands, map<string, int>& data,
+int runWhile(vector<vector<string> >& commands, map<string, int>& data,
     map<string, string>& dataString, map<string, char>& dataType, int i, bool debug){
-    if (data[commands[i][1]] != data[commands[i][2]]){
-        if (debug){
+    /*if (data[commands[i][1]] != data[commands[i][2]]){
+        if (true){
             cout << "\nrunCommandCounter is:" << i << "\n" << "in run while \n";
             cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n";
             cout << commands[i][2] << " value is:" << data[commands[i][2]] << "\n";
             cout << "loop back position is:" << commands[i][3] << "\n\n";
         }
         i = intFromString(commands[i][3]);
+        return i;
+    }
+    else {
+        return i;
+    }*/
+    if (dataType[commands[i][1]] == 's' && dataType[commands[i][2]] == 's'){
+        if (dataString[commands[i][1]] == dataString[commands[i][2]]){
+            //cout << "IN String if\n";
+            //cout << "value 1 is :" << dataString[commands[i][1]] << "?\n";
+            //cout << "value 2 is :" << dataString[commands[i][2]] << "?\n";
+            //if command is if add one to ifCounter
+            //if command is endif subtract on from if
+            int loopCounter = 1;
+            int loopIter = i - 1;
+            while (loopCounter){
+                //cout << "ifTer is :" << ifIter << "<==\n";
+                if (commands[loopIter][0] == "while "){
+                    loopCounter++;
+                }
+                if (commands[loopIter][0] == "loop "){
+                    cout << "Loop at :" << loopIter << "<==\n";
+                    loopCounter--;
+                }
+                loopIter--;
+                if (loopIter < 0){
+                    cout << "ERROR::loop not found::" << i << "::\n";
+                }
+            }
+            //loopIter--;
+            return loopIter;
+        }
+        return i;
+    }
+    else if (dataType[commands[i][1]] == 'i' && dataType[commands[i][2]] == 'i') {
+        if (data[commands[i][1]] == data[commands[i][2]]){
+            //if command is if add one to ifCounter
+            //if command is endif subtract on from if
+            int loopCounter = 1;
+            int loopIter = i - 1;
+            while (loopCounter){
+                //cout << "ifTer is :" << ifIter << "<==\n";
+                if (commands[loopIter][0] == "while "){
+                    loopCounter++;
+                }
+                if (commands[loopIter][0] == "loop "){
+                    loopCounter--;
+                    cout << "Loop at :" << loopIter << "<==\n";
+                }
+                loopIter--;
+                if (loopIter < 0){
+                    cout << "ERROR::loop not found::" << i << "::\n";
+                }
+            }
+            //loopIter--;
+            return loopIter;
+        }
+        return i;
+    }
+    else {
+        cout << "ERROR::Type Mismatch<==\n";
+        return i;
     }
 }
 
@@ -211,24 +274,65 @@ void runAssign(vector<vector<string> >& commands, map<string, int>& data,
     }
 }
 
-void runIf(vector<vector<string> >& commands, map<string, int>& data,
+int runIf(vector<vector<string> >& commands, map<string, int>& data,
     map<string, string>& dataString, map<string, char>& dataType, int i, bool debug){
-    if (data[commands[i][1]] != data[commands[i][2]]){
-        //if command is if add one to ifCounter
-        //if command is endif subtract on from if
-        int ifCounter = 1;
-        unsigned int ifIter = i + 1;
-        while (ifCounter){
-            if (commands[ifIter][0] == "if "){
-                ifCounter++;
-            }
-            if (commands[ifIter][0] == "endif "){
-                ifCounter--;
-            }
-            ifIter++;
+    if (dataType[commands[i][1]] == 's' && dataType[commands[i][2]] == 's'){
+        if (dataString[commands[i][1]] != dataString[commands[i][2]]){
+            //cout << "IN String if\n";
+            //cout << "value 1 is :" << dataString[commands[i][1]] << "?\n";
+            //cout << "value 2 is :" << dataString[commands[i][2]] << "?\n";
+            //if command is if add one to ifCounter
+            //if command is endif subtract on from if
+            unsigned int ifCounter = 0;
+            unsigned int ifIter = i;
+            do {
+                //cout << "ifTer is :" << ifIter << "<==\n";
+                if (commands[ifIter][0] == "if "){
+                    ifCounter++;
+                }
+                if (commands[ifIter][0] == "endif "){
+                    ifCounter--;
+                }
+                ifIter++;
+                if (ifIter > commands.size()){
+                    cout << "ERORR::NO endif found::" << i << "::\n";
+                    return i;
+                }
+            } while(ifCounter);
+            ifIter--;
+            i = ifIter;
+            return i;
         }
-        ifIter--;
-        i = ifIter;
+        return i;
+    }
+    else if (dataType[commands[i][1]] == 'i' && dataType[commands[i][2]] == 'i') {
+        if (data[commands[i][1]] != data[commands[i][2]]){
+            //if command is if add one to ifCounter
+            //if command is endif subtract on from if
+            unsigned int ifCounter = 0;
+            unsigned int ifIter = i;
+            do {
+                //cout << "ifTer is :" << ifIter << "<==\n";
+                if (commands[ifIter][0] == "if "){
+                    ifCounter++;
+                }
+                if (commands[ifIter][0] == "endif "){
+                    ifCounter--;
+                }
+                ifIter++;
+                if (ifIter > commands.size()){
+                    cout << "ERORR::NO endif found::" << i << "::\n";
+                }
+            } while(ifCounter);
+            ifIter--;
+            i = ifIter;
+            return i;
+        }
+        return i;
+    }
+    else {
+        cout << "ERROR::Type Mismatch<==\n";
+        return i;
     }
 }
 
@@ -279,7 +383,7 @@ void run(vector<vector<string> >& commands, map<string, int>& data, map<string, 
         }
         //while
         else if (commands[i][0] == "while "){
-            runWhile(commands, data, dataString, dataType, i, debug);
+            i = runWhile(commands, data, dataString, dataType, i, debug);
         }
         //assign
         else if (commands[i][0] == "assign "){
@@ -287,7 +391,9 @@ void run(vector<vector<string> >& commands, map<string, int>& data, map<string, 
         }
         //if
         else if (commands[i][0] == "if "){
-            runIf(commands, data, dataString, dataType, i, debug);
+            cout << "ifPos is:" << i + 1 << "<==\n";
+            i = runIf(commands, data, dataString, dataType, i, debug);
+            cout << "endIf is:" << i + 1 << "<==\n";
         }
         //input
         else if (commands[i][0] == "input "){

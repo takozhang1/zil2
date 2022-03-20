@@ -22,15 +22,7 @@ void parseCode(string& code, vector<vector<string> >& commands){
     bool bDivi = false;
     bool bModu = false;
     bool bInput = false;
-
-    // Test Loop Values
-    int loopPosition[] {};
-    int loopNumber = 0;
     bool bWhile = false;
-    int pc = 0;
-
-    int ifPosition[] {};
-    int ifNumber = 0;
     bool bIf = false;
 
     // String
@@ -90,9 +82,9 @@ void parseCode(string& code, vector<vector<string> >& commands){
                     string stringString = "";
                     stringString += '"';
                     for (int j = stringStartPos + 1; code[j] != '"' || code[j - 1] == '\\'; j++){
-                        cout << "Char ==>" << code[j] << "<==\n";
+                        //cout << "Char ==>" << code[j] << "<==\n";
                         stringString += code[j];
-                        cout << "Building String::" << stringString << "\n";
+                        //cout << "Building String::" << stringString << "\n";
                     }
                     stringString += '"';
 
@@ -315,13 +307,8 @@ void parseCode(string& code, vector<vector<string> >& commands){
             if (valueString == "loop "){
                 cout << "in loop \n";
                 command[0] = valueString;
-                command[1] = commandCounter;
-                loopPosition[loopNumber] = commandCounter;
-                cout << "loop position is :" << loopPosition[loopNumber] << "\n\n";
-                loopNumber++;
-
+                cout << "loop position is :" << commandCounter << "\n\n";
                 commands.push_back(command);
-
                 command.clear();
                 command = {"","","",""};
                 commandCounter++;
@@ -340,13 +327,7 @@ void parseCode(string& code, vector<vector<string> >& commands){
             else if (bWhile == true && bValue == true){
                 command[2] = valueString;
                 cout << "value 2 is:" << command[2] << "\n";
-                command[3] = toString(loopPosition[loopNumber - 1]);
-                cout << "loopPosition is:" << command[3] << "\n\n";
-
-                loopNumber--;
-
                 commands.push_back(command);
-
                 command.clear();
                 command = {"","","",""};
                 bWhile = false;
@@ -357,9 +338,7 @@ void parseCode(string& code, vector<vector<string> >& commands){
             if (valueString == "if "){
                 cout << "in if \n";
                 command[0] = valueString;
-                //ifPosition[ifNumber] = commandCounter;
                 bIf = true;
-                //ifNumber++;
             }
             else if (bIf == true && bValue == false){
                 command[1] = valueString;
@@ -376,7 +355,6 @@ void parseCode(string& code, vector<vector<string> >& commands){
             }
             if (valueString == "endif "){
                 cout << "in endif \n";
-                //commands[ifPosition[ifNumber -1]][3] = toString(commandCounter - 1);
                 command[0] = valueString;
                 commands.push_back(command);
                 command.clear();
