@@ -1,0 +1,352 @@
+ let welcomeMessage "Welcome to Tik Tak Toe\n" 
+ let playGameMessage "Play Game Y/N: " 
+ let goodByeMessage "Play again later!!\n" 
+ let getXMoveMessage "Enter a column 1 - 3:" 
+ let getYMoveMessage "Enter a row 1 - 3:" 
+ let badMoveMessage "The slot is Taken\n" 
+ let youWinMessage "YOU OUR WINNER!!!\n" 
+ let youLoseMessage "ALL YOUR BASE ARE BELONG TO US!!!\n" 
+ let drawMessage "WE THINK ALIKE, SALTY DOG!!\n" 
+ let cpuThinking "I'm Thinking!!!" 
+ 
+ let playGame "" 
+ let yes "y" 
+ let no "n" 
+ let zero 0 
+ let one 1 
+ let two 2 
+ let gameOver 0  
+ let playerX " " 
+ let playerY " " 
+ let sOne "1" 
+ let sTwo "2" 
+ let sThree "3" 
+ let playerMoved 0 
+ let min 0 
+ let max 2 
+ let cpuX 0 
+ let cpuY 0 
+ let round 0 
+ let roundMax 9 
+ let turn 0 
+ let both 0 
+ 
+ let boardTop " - - - - \n" 
+ let boardSide "|" 
+ let emptyPiece "#" 
+ let playerPiece "X" 
+ let cpuPiece "O" 
+ let space " " 
+ let newLine "\n" 
+ let board-0-0 "#" 
+ let board-0-1 "#" 
+ let board-0-2 "#" 
+ let board-1-0 "#" 
+ let board-1-1 "#" 
+ let board-1-2 "#" 
+ let board-2-0 "#" 
+ let board-2-1 "#" 
+ let board-2-2 "#" 
+ 
+ print welcomeMessage 
+ print playGameMessage 
+ input playGame 
+ if playGame yes 
+  loop 
+   print boardTop 
+   print boardSide 
+   print space 
+   print board-0-0 
+   print space 
+   print board-0-1 
+   print space 
+   print board-0-2 
+   print space 
+   print boardSide 
+   print newLine 
+   print boardTop 
+   print boardSide 
+   print space 
+   print board-1-0 
+   print space 
+   print board-1-1 
+   print space 
+   print board-1-2 
+   print space 
+   print boardSide 
+   print newLine 
+   print boardTop 
+   print boardSide 
+   print space 
+   print board-2-0 
+   print space 
+   print board-2-1 
+   print space 
+   print board-2-2 
+   print space 
+   print boardSide 
+   print newLine 
+   print boardTop 
+   
+   if turn zero 
+   loop 
+    print getYMoveMessage 
+    input playerY 
+    print getXMoveMessage 
+    input playerX 
+    assign playerMoved zero 
+    if playerY sOne 
+     if playerX sOne 
+      if board-0-0 emptyPiece 
+       assign board-0-0 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sTwo 
+      if board-0-1 emptyPiece 
+       assign board-0-1 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sThree 
+      if board-0-2 emptyPiece 
+       assign board-0-2 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+    endif 
+    if playerY sTwo 
+     if playerX sOne 
+      if board-1-0 emptyPiece 
+       assign board-1-0 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sTwo 
+      if board-1-1 emptyPiece 
+       assign board-1-1 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sThree 
+      if board-1-2 emptyPiece 
+       assign board-1-2 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif  
+    endif 
+    if playerY sThree 
+     if playerX sOne 
+      if board-2-0 emptyPiece 
+       assign board-2-0 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sTwo 
+      if board-2-1 emptyPiece 
+       assign board-2-1 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if playerX sThree 
+      if board-2-2 emptyPiece 
+       assign board-2-2 playerPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+    endif 
+    if playerMoved zero 
+     print badMoveMessage 
+    endif 
+   while playerMoved zero 
+   add round round one 
+   assign both zero 
+   endif 
+   
+   if turn one 
+   loop 
+    rand cpuY min max 
+    rand cpuX min max 
+    assign playerMoved zero 
+    if cpuY zero 
+     if cpuX zero 
+      if board-0-0 emptyPiece 
+       assign board-0-0 cpuPiece  
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX one   
+      if board-0-1 emptyPiece 
+       assign board-0-1 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX two   
+      if board-0-2 emptyPiece 
+       assign board-0-2 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+    endif 
+    if cpuY one  
+     if cpuX zero  
+      if board-1-0 emptyPiece 
+       assign board-1-0 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX one  
+      if board-1-1 emptyPiece 
+       assign board-1-1 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX two  
+      if board-1-2 emptyPiece 
+       assign board-1-2 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif  
+    endif 
+    if cpuY two  
+     if cpuX zero  
+      if board-2-0 emptyPiece 
+       assign board-2-0 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX one  
+      if board-2-1 emptyPiece 
+       assign board-2-1 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+     if cpuX two  
+      if board-2-2 emptyPiece 
+       assign board-2-2 cpuPiece 
+       assign playerMoved one 
+      endif 
+     endif 
+    endif 
+    print cpuThinking 
+   while playerMoved zero 
+   add round round one 
+   assign both one 
+   endif 
+   
+   if board-0-0 board-0-1 
+    if board-0-1 board-0-2 
+     if board-0-0 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif  
+     if board-0-0 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   if board-1-0 board-1-1 
+    if board-1-1 board-1-2 
+     if board-1-0 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-1-0 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   if board-2-0 board-2-1 
+    if board-2-1 board-2-2 
+     if board-2-0 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-2-0 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   
+   if board-0-0 board-1-0 
+    if board-1-0 board-2-0 
+     if board-0-0 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-0-0 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   if board-0-1 board-1-1 
+    if board-1-1 board-2-1 
+     if board-0-1 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-0-1 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   if board-0-2 board-1-2 
+    if board-1-2 board-2-2 
+     if board-0-2 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-0-2 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   
+   if board-0-0 board-1-1 
+    if board-1-1 board-2-2 
+     if board-1-1 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-1-1 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   if board-0-2 board-1-1 
+    if board-1-1 board-2-0 
+     if board-1-1 playerPiece 
+      print youWinMessage 
+      assign gameOver one 
+     endif 
+     if board-1-1 cpuPiece 
+      print youLoseMessage 
+      assign gameOver one 
+     endif 
+    endif 
+   endif 
+   
+   if turn zero 
+    assign turn one 
+   endif 
+   if both one 
+    assign turn zero 
+   endif 
+   
+   if round roundMax 
+    assign gameOver one 
+    print drawMessage 
+   endif 
+   
+  while gameOver zero 
+ endif 
+ if playGame no 
+  print goodByeMessage 
+ endif 
