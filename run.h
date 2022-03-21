@@ -26,5 +26,7 @@ int runIf(std::vector<std::vector<std::string> >& commands, std::map<std::string
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
 void runInput(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
+void runRand(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
+    std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug);
 
 #endif // RUN_H_INCLUDED

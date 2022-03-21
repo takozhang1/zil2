@@ -24,6 +24,7 @@ void parseCode(string& code, vector<vector<string> >& commands){
     bool bInput = false;
     bool bWhile = false;
     bool bIf = false;
+    bool bRand = false;
 
     // String
     int stringStartPos = 0;
@@ -374,6 +375,35 @@ void parseCode(string& code, vector<vector<string> >& commands){
                 commands.push_back(command);
                 bInput = false;
                 bKey = false;
+                key.clear();
+                command.clear();
+                command = {"","","",""};
+                commandCounter++;
+            }
+
+            //Random variable = range min max
+            if (valueString == "rand "){
+                bRand = true;
+                command[0] = valueString;
+                cout << "in rand\n";
+            }
+            else if(bRand == true && bKey == false){
+                command[1] = valueString;
+                cout << "storage name is :" << command[1] << "\n";
+                bKey = true;
+            }
+            else if (bRand == true && bKey == true && bValue == false){
+                command[2] = valueString;
+                cout << "value 1 is :" << command[2] << "\n";
+                bValue = true;
+            }
+            else if (bRand == true && bValue == true){
+                command[3] = valueString;
+                cout << "value 2 is :" << command[3] << "\n\n";
+                commands.push_back(command);
+                bRand = false;
+                bKey = false;
+                bValue = false;
                 key.clear();
                 command.clear();
                 command = {"","","",""};

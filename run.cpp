@@ -336,6 +336,32 @@ int runIf(vector<vector<string> >& commands, map<string, int>& data,
     }
 }
 
+void runRand(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
+    std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug){
+    //Seed random engine
+    unsigned long seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    default_random_engine eng(seed);
+
+    if (dataType[commands[i][1]] == 's' && dataType[commands[i][2]] == 's' && dataType[commands[i][3]] == 's'){
+        uniform_int_distribution<int> uni(intFromString(dataString[commands[i][2]]), intFromString(dataString[commands[i][3]]));
+        dataString[commands[i][1]] = toString(uni(eng));
+    }
+    else if (dataType[commands[i][1]] == 'i' && dataType[commands[i][2]] == 'i' && dataType[commands[i][3]] == 'i'){
+        uniform_int_distribution<int> uni(data[commands[i][2]], data[commands[i][3]]);
+        data[commands[i][1]] = uni(eng);
+    }
+    else{
+        cout << "Error type missmatch\n" << dataType[commands[i][1]] << " != " << dataType[commands[i][2]];
+        cout << " != " << dataType[commands[i][3]] << "\n";
+    }
+    if (debug){
+        cout << "\nrunCommandCounter is:" << i << "\n" << "in run rand \n";
+        cout << commands[i][1] << " value is:" << data[commands[i][1]] << "\n";
+        cout << commands[i][2] << " value is:" << data[commands[i][2]] << "\n";
+        cout << commands[i][3] << " value is:" << data[commands[i][3]] << "\n";
+    }
+}
+
 void runInput(std::vector<std::vector<std::string> >& commands, std::map<std::string, int>& data,
     std::map<std::string, std::string>& dataString, std::map<std::string, char>& dataType, int i, bool debug){
     string temp = "";
@@ -391,13 +417,17 @@ void run(vector<vector<string> >& commands, map<string, int>& data, map<string, 
         }
         //if
         else if (commands[i][0] == "if "){
-            cout << "ifPos is:" << i + 1 << "<==\n";
+            if(debug) {cout << "ifPos is:" << i + 1 << "<==\n";}
             i = runIf(commands, data, dataString, dataType, i, debug);
-            cout << "endIf is:" << i + 1 << "<==\n";
+            if(debug) {cout << "endIf is:" << i + 1 << "<==\n";}
         }
         //input
         else if (commands[i][0] == "input "){
             runInput(commands, data, dataString, dataType, i, debug);
+        }
+        //random
+        else if (commands[i][0] == "rand "){
+            runRand(commands, data, dataString, dataType, i, debug);
         }
     }
 }
