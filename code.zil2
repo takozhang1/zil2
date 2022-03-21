@@ -62,4 +62,9 @@
  let tempSpace "pizza" 
  input up 
  print up 
+ let min 5 
+ let max 100 
+ let var 0 
+ rand var min max 
+ print var 
  
